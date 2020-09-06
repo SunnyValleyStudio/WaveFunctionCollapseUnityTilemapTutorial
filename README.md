@@ -6,5 +6,5 @@ This is an implementation of wave function collapse algorithm using Unity and it
 [![Tutorial](https://img.youtube.com/vi/ws4r3wLPNSE/0.jpg)](https://youtu.be/ws4r3wLPNSE)
 MIT Licence
 <p>Attribution:
-Made by Sunny Valley Studio Piotr Maciejewski sunnyvalleystudio@gmail.com
+Made by Sunny Valley Studio
 
