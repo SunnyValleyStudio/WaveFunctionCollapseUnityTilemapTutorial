@@ -46,64 +46,23 @@ namespace WaveFunctionCollapse
         }
 
         public int GetGridValue(int x, int y)
-        {
-            if (x >= _grid[0].Length || y >= _grid.Length || x < 0 || y < 0)
-            {
-                throw new System.IndexOutOfRangeException("Grid doeant contain x: " + x + " y: " + y + " value");
-            }
-            return _grid[y][x];
-        }
+			=> x < _grid[0].Length && y < _grid.Length && x >= 0 && y >= 0
+				? _grid[x][y]
+				: throw new IndexOutOfRangeException($"Grid doesn't contain x: {x} y: {y} value");
 
         public IValue<T> GetValueFromIndex(int index)
-        {
-            if (valueIndexDictionary.ContainsKey(index))
-            {
-                return valueIndexDictionary[index];
-            }
-            throw new System.Exception("No index " + index + " in valueDictionary");
-        }
+			=> valueIndexDictionary.ContainsKey(index)
+				? valueIndexDictionary[index]
+				: throw new IndexOutOfRangeException($"Index {index} not found in valueDictionary");
 
         public int GetGridValuesIncludingOffset(int x, int y)
-        {
-            int yMax = _grid.Length;
-            int xMax = _grid[0].Length;
-            if(x<0 && y < 0)
-            {
-                return GetGridValue(xMax + x, yMax + y);
-            }
-            if(x<0 && y >= yMax)
-            {
-                return GetGridValue(xMax + x, y - yMax);
-            }
-            if(x>=xMax && y < 0)
-            {
-                return GetGridValue(x - xMax, yMax + y);
-            }
-            if(x >=xMax && y >= yMax)
-            {
-                return GetGridValue(x - xMax, y - yMax);
-            }
-
-            if (x < 0)
-            {
-                return GetGridValue(xMax + x, y);
-            }
-            if (x >= xMax)
-            {
-                return GetGridValue(x - xMax, y);
-            }
-            if (y < 0)
-            {
-                return GetGridValue(x, yMax + y);
-            }
-
-            if (y >= yMax)
-            {
-                return GetGridValue(x, y - yMax);
-            }
-            return GetGridValue(x, y);
-            
-        }
+		{
+			int xMax = _grid.Length;
+			int yMax = _grid[0].Length;
+			if ((x %= xMax) < 0) x += xMax;
+			if ((y %= yMax) < 0) y += yMax;
+			return GetGridValue(x, y);
+		}
 
         public int[][] GetPatternValuesFromGridAt(int x, int y, int patternSize)
         {
