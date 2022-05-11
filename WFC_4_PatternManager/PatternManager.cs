@@ -11,7 +11,6 @@ namespace WaveFunctionCollapse
         Dictionary<int, PatternData> patternDataIndexDictionary;
         Dictionary<int, PatternNeighbours> patternPossibleNeighboursDictionary;
         int _patternSize = -1;
-        IFindNeighbourStrategy strategy;
 
         public PatternManager(int patternSize)
         {
@@ -20,8 +19,8 @@ namespace WaveFunctionCollapse
 
         public void ProcessGrid<T>(ValuesManager<T> valueManager, bool equalWeights, string strategyName = null)
         {
-            NeighbourStrategyFactory strategyFactory = new NeighbourStrategyFactory();
-            strategy = strategyFactory.CreteInstance(strategyName == null ? _patternSize + "" : strategyName);
+            NeighbourStrategyFactory strategyFactory = new();
+            IFindNeighbourStrategy strategy = strategyFactory.CreateInstance(strategyName ?? _patternSize.ToString());
             CreatePatterns(valueManager, strategy, equalWeights);
         }
 
