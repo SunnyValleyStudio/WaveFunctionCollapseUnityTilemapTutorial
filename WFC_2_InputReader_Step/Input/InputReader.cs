@@ -9,53 +9,36 @@ namespace WaveFunctionCollapse
 {
     public class InputReader : IInputReader<TileBase>
     {
+		public static IValue<TileBase>[][] ReadInputToGrid(Tilemap tilemap)
+		{
+			InputImageParameters imageParameters = new(tilemap);
+			TileBase[][] grid = MyCollectionExtension.CreateJaggedArray<TileBase[][]>(imageParameters.Tilemap.cellBounds.max.x, imageParameters.Tilemap.cellBounds.max.y);
 
-        private Tilemap _inputTilemap;
+			for (int row = 0; row < imageParameters.Tilemap.cellBounds.max.x; row++)
+			{
+				for (int col = 0; col < imageParameters.Tilemap.cellBounds.max.y; col++)
+				{
+					grid[row][col] = imageParameters.StackOfTiles.Dequeue().Tile;
+				}
+			}
 
-        public InputReader(Tilemap input)
-        {
-            _inputTilemap = input;
-        }
-        public IValue<TileBase>[][] ReadInputToGrid()
-        {
-            var grid = ReadInputTileMap();
+			TileBaseValue[][] gridOfValues = null;
+			if (grid != null)
+			{
+				gridOfValues = MyCollectionExtension.CreateJaggedArray<TileBaseValue[][]>(grid.Length, grid[0].Length);
 
-            TileBaseValue[][] gridOfValues = null;
-            if(grid != null)
-            {
-                gridOfValues = MyCollectionExtension.CreateJaggedArray<TileBaseValue[][]>(grid.Length, grid[0].Length);
-                for (int row = 0; row < grid.Length; row++)
-                {
-                    for (int col = 0; col < grid[0].Length; col++)
-                    {
-                        gridOfValues[row][col] = new TileBaseValue(grid[row][col]);
-                    }
-                }
-            }
+				for (int row = 0; row < grid.Length; row++)
+				{
+					for (int col = 0; col < grid[0].Length; col++)
+					{
+						gridOfValues[row][col] = new TileBaseValue(grid[row][col]);
 
-            return gridOfValues;
-        }
+					}
+				}
+			}
 
-        private TileBase[][] ReadInputTileMap()
-        {
-            InputImageParameters imagerParameters = new InputImageParameters(_inputTilemap);
-            return CreteTileBaseGrid(imagerParameters);
-        }
-
-        private TileBase[][] CreteTileBaseGrid(InputImageParameters imagerParameters)
-        {
-            TileBase[][] gridOfInputTiles = null;
-            gridOfInputTiles = MyCollectionExtension.CreateJaggedArray<TileBase[][]>(imagerParameters.Height, imagerParameters.Width);
-            for (int row = 0; row < imagerParameters.Height; row++)
-            {
-                for (int col = 0; col < imagerParameters.Width; col++)
-                {
-                    gridOfInputTiles[row][col] = imagerParameters.StackOftiles.Dequeue().Tile;
-                }
-            }
-
-            return gridOfInputTiles;
-        }
+			return gridOfValues;
+		}
     }
 }
 
