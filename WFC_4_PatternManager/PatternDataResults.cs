@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Helpers;
+using static WaveFunctionCollapse.Direction;
 
 namespace WaveFunctionCollapse
 {
