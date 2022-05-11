@@ -23,13 +23,9 @@ namespace WaveFunctionCollapse
         }
 
         internal HashSet<int> GetNeighboursInDirection(Direction dir)
-        {
-            if (directionPatternNeighbourDictionary.ContainsKey(dir))
-            {
-                return directionPatternNeighbourDictionary[dir];
-            }
-            return new HashSet<int>();
-        }
+			=> directionPatternNeighboursDictionary.ContainsKey(direction)
+				? directionPatternNeighboursDictionary[direction]
+				: new();
 
         public void AddNeighbour(PatternNeighbours neighbours)
         {
