@@ -10,8 +10,7 @@ public class TEst : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InputReader reader = new InputReader(input);
-        var grid = reader.ReadInputToGrid();
+        var grid = InputReader.ReadInputToGrid(input);
         for (int row = 0; row < grid.Length; row++)
         {
             for (int col = 0; col < grid[0].Length; col++)
