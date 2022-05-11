@@ -7,33 +7,24 @@ namespace WaveFunctionCollapse
 {
     public class TileBaseValue : IValue<TileBase>
     {
-        private TileBase tileBase;
-
         public TileBaseValue(TileBase tileBase)
         {
-            this.tileBase = tileBase;
+            Value = tileBase;
         }
 
-        public TileBase Value => this.tileBase;
+        public TileBase Value { get; }
 
         public bool Equals(IValue<TileBase> x, IValue<TileBase> y)
-        {
-            return x == y;
-        }
+			=> x == y;
 
         public bool Equals(IValue<TileBase> other)
-        {
-            return other.Value == this.Value;
-        }
+			=> other.Value == Value;
 
         public int GetHashCode(IValue<TileBase> obj)
-        {
-            return obj.GetHashCode();
-        }
+			=> obj.GetHashCode();
+
         public override int GetHashCode()
-        {
-            return this.tileBase.GetHashCode();
-        }
+			=> Value.GetHashCode();
     }
 
 }
