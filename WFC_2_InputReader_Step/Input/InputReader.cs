@@ -27,9 +27,9 @@ namespace WaveFunctionCollapse
 			{
 				gridOfValues = MyCollectionExtension.CreateJaggedArray<TileBaseValue[][]>(grid.Length, grid[0].Length);
 
-				for (int row = 0; row < grid.Length; row++)
+				for (int row = 0; row < grid[0].Length; row++)
 				{
-					for (int col = 0; col < grid[0].Length; col++)
+					for (int col = 0; col < grid.Length; col++)
 					{
 						gridOfValues[row][col] = new TileBaseValue(grid[row][col]);
 
